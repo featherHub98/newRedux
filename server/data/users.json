@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "Mouhammad Graba",
+    "email": "tester@gmail.com",
+    "pwd": "$2a$10$F4HfHD48mda.O1XYJ/rdguAGVSw6vDDJxEfz2JjTEnlheUP5cBAxG"
+  },
+  {
+    "id": 2,
+    "name": "saif",
+    "email": "tst@tst.com",
+    "pwd": "$2a$10$N6XQhX4kVZ3QoPYvTSZ1FeMO5qKszMHRRgsvuQTYqNCnTOjRJctzO"
+  }
+]

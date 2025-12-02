@@ -1,3 +1,4 @@
+// src/components/loginPage/loginPage.tsx
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -7,7 +8,7 @@ import { login } from '../../redux/reducers/loginSlice.tsx';
 import { useDispatch } from 'react-redux';
 import Container from 'react-bootstrap/esm/Container';
 import axios from 'axios';
-import { authService } from '../../services/authService.ts'; // Import the auth service
+// REMOVE: import { authService } from '../../services/authService.ts'; // Auth logic is now on server
 
 function LoginPage() {
   const dispatch = useDispatch();
@@ -23,37 +24,37 @@ function LoginPage() {
     setLoading(true);
 
     try {
-      // Fetch users from data.json
-      const response = await axios.get('/data.json');
-      const users = response.data;
+      // The client calls the new server login API endpoint
+      const response = await axios.post('/api/login', { 
+        email: email,
+        password: pwd, // Send plaintext password to the server
+      });
 
-      // Use authService for authentication
-      const result = await authService.login(email, pwd, users);
+      // The server returns the token on success
+      const { token } = response.data; 
 
-      if (result.success && result.token) {
+      if (token) {
         dispatch(login({ 
           email: email, 
-          token: result.token 
+          token: token 
         }));
         navigate('/upload');
       } else {
-        setError(result.error || 'Login failed');
+        setError('Login successful, but no token received.');
       }
-    } catch (err) {
-      console.error('Login error:', err);
-      setError('Failed to connect to server');
+    } catch (error: any) {
+      // Get error from server response
+      const errorMessage = error.response?.data?.error || 'Login failed. Please check your credentials.';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <Container
-      className="d-flex justify-content-center align-items-center"
-      style={{ minHeight: '100vh', backgroundColor: '#f8f9fa' }}
-    >
-      <Card style={{ width: '100%', maxWidth: '400px', padding: '20px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
-        <Card.Body>
+    <Container className="d-flex justify-content-center align-items-center" style={{ minHeight: '80vh' }}>
+      <Card style={{ width: '25rem' }} className="shadow-lg">
+        <Card.Body className="p-4">
           <h2 className="text-center mb-4">Welcome Back!</h2>
           
           {error && (

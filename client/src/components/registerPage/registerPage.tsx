@@ -1,7 +1,10 @@
+// src/components/registerPage/registerPage.tsx
 import React,{useState} from 'react'
 import { Container, Row, Form, Col, Button } from 'react-bootstrap';
-import {hashPasswords} from '../../services/hashPassword';
+// REMOVE: import {hashPasswords} from '../../services/hashPassword';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 export default function RegisterPage() {
     interface FormData {
         name: string;
@@ -15,6 +18,7 @@ export default function RegisterPage() {
         password: '',
         confirmPassword: '',
       });
+      const navigate = useNavigate();
 
       const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,43 +27,51 @@ export default function RegisterPage() {
       const handleSubmit = (e:React.FormEvent) => {
         e.preventDefault();
         const { name, email, password, confirmPassword } = formData;
+        
         if (password !== confirmPassword) {
           alert("Passwords do not match");
           return;
         }
-        // Hash the password before storing
-        hashPasswords(password).then((hashedPwd:string) => {
-          const newUser = {
-            password: hashedPwd,
+
+        // 1. Send PLAINTEXT password to the server
+        const newUser = {
+            name: name,
             email: email,
-            name: name
-          };
-          axios.post('/data.json', newUser)
+            password: password, 
+        };
+        
+        // 2. Call the new server API endpoint
+        axios.post('/api/register', newUser) 
             .then(() => {
-              alert("Registration successful!");
+              alert("Registration successful! You can now log in.");
+              navigate('/'); // Redirect to login page
             })
             .catch((error) => {
+              // The server returns the error message
+              const errorMessage = error.response?.data?.error || "Registration failed. Please try again.";
               console.error("There was an error registering the user!", error);
+              alert(errorMessage);
             });
-      })}
-  return (
-    <Container className="mt-5">
+      };
+      
+      return (
+        <Container className="my-5">
           <Row className="justify-content-md-center">
             <Col md={6}>
               <h2 className="text-center mb-4">Register</h2>
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicName">
-                  <Form.Label>Name</Form.Label>
+                  <Form.Label>Full Name</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Enter your name"
+                    placeholder="Enter full name"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
                     required
                   />
                 </Form.Group>
-
+                
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Email address</Form.Label>
                   <Form.Control
@@ -104,5 +116,4 @@ export default function RegisterPage() {
           </Row>
         </Container>
       );
- 
 }
