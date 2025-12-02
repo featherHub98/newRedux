@@ -1,0 +1,3 @@
+# Ignores all directories named 'node_modules' in any directory,
+# including the root, redux_upload/, and server/.
+node_modules

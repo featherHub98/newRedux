@@ -1,0 +1,4 @@
+create navBar
+create login page
+create json page as a bd
+create store for isLogged
