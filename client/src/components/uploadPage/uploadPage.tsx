@@ -1,18 +1,21 @@
 import {useState,useEffect} from "react"
 import { Container, Card, Form, ListGroup, Button, Alert } from 'react-bootstrap';
 
-//import { useDispatch } from "react-redux"
+
 interface StoredFile  {
           id: number,
           name : string | undefined,
           type : string | undefined,
-          data : string 
+          data : string ,
+          date : string | undefined,
+          counter : number 
         };
 
 export default function UploadPage() {
-   // const dispatch = useDispatch();
+  
     const [files,setFiles] = useState<StoredFile[]>([])
     const [error,setError] = useState('')
+    const [downloadCount,setDownloadCount] = useState(0)
     useEffect (()=>{
       const storedValue = localStorage.getItem('my_stored_files');
       let savedFiles= []
@@ -37,6 +40,8 @@ export default function UploadPage() {
           name: selectedFile.name,
           type: selectedFile.type,
           data: event.target.result,
+          date: new Date().toISOString(),
+          counter: downloadCount
         };
 
         const updatedFiles = [...files, newFile];
@@ -61,7 +66,7 @@ export default function UploadPage() {
   return (
     <Container className="d-flex justify-content-center py-5">
       
-      <Card style={{ width: '100%', maxWidth: '550px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+      <Card style={{ width: '100%', maxWidth: '650px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
         
         <Card.Header as="h2" className="text-center bg-primary text-white">
           <i className="bi bi-folder-fill me-2"></i>Local Storage File Manager
@@ -94,8 +99,8 @@ export default function UploadPage() {
                   key={file.id} 
                   className="d-flex justify-content-between align-items-center"
                 >
-                  <span className="fw-bold text-truncate me-2" style={{ maxWidth: '60%' }}>
-                    {file.name}
+                  <span className="fw-bold text-truncate me-2" style={{ maxWidth: '100%' }}>
+                    {file.name}{  file.date ? ` (Uploaded on: ${new Date(file.date).toLocaleDateString()})` : ''} -Download Times:{file.counter}
                   </span>
                   
                   <div>
@@ -106,6 +111,7 @@ export default function UploadPage() {
                       variant="outline-success" 
                       size="sm" 
                       className="me-2"
+                      onClick={()=>{setDownloadCount(file.counter ++)}}
                     >
                       Download
                     </Button>
