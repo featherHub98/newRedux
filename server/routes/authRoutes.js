@@ -3,7 +3,7 @@ const app = express();
 
 const { hashPasswords } = require('../services/hashPassword');
 const { comparePassword, generateToken } = require('../services/authService');
-const { getUsers, saveUsers } = require('../services/dataHandler');
+const { getUsers, saveUsers } = require('../controller/dataHandler');
 
 
 app.post('/register', async (req, res) => {

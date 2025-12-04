@@ -1,7 +1,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 
-const DATA_FILE_PATH = path.resolve(__dirname, '../data/users.json');
+const DATA_FILE_PATH = path.resolve(__dirname, '../config/users.json');
 
 async function getUsers() {
     try {
