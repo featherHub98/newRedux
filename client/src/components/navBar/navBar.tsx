@@ -32,10 +32,18 @@ function NavBar() {
     <Navbar expand="lg" bg="dark" variant="dark">
       <Container>
         <Navbar.Brand 
+        
             as={NavLink} 
             to="/dashboard" 
             className="fw-bold fs-4"
         >
+         <img
+            src="/logoipsum-394.svg"
+            width="30"
+            height="30"
+            className="d-inline-block align-top me-2"
+            alt="App Logo"
+          /> 
           newApp
         </Navbar.Brand>
         

@@ -19,9 +19,7 @@ const loginSlice = createSlice({
     login: (state, action: PayloadAction<{ email: string; token: string }>) => {
       state.isLoggedIn = true;
       state.email = action.payload.email;
-      state.token = action.payload.token;
-      
-      // Store token in localStorage for persistence
+      state.token = action.payload.token; 
       localStorage.setItem('authToken', action.payload.token);
       localStorage.setItem('userEmail', action.payload.email);
     },
@@ -29,13 +27,11 @@ const loginSlice = createSlice({
       state.isLoggedIn = false;
       state.email = "";
       state.token = null;
-      
-      // Clear localStorage
+    
       localStorage.removeItem('authToken');
       localStorage.removeItem('userEmail');
     },
     initializeAuth: (state) => {
-      // Check if user is already logged in (on app refresh)
       const token = localStorage.getItem('authToken');
       const email = localStorage.getItem('userEmail');
       

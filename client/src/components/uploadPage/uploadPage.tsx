@@ -15,7 +15,6 @@ export default function UploadPage() {
   
     const [files,setFiles] = useState<StoredFile[]>([])
     const [error,setError] = useState('')
-    const [downloadCount,setDownloadCount] = useState(0)
     useEffect (()=>{
       const storedValue = localStorage.getItem('my_stored_files');
       let savedFiles= []
@@ -41,7 +40,7 @@ export default function UploadPage() {
           type: selectedFile.type,
           data: event.target.result,
           date: new Date().toISOString(),
-          counter: downloadCount
+          counter: 0
         };
 
         const updatedFiles = [...files, newFile];
@@ -61,7 +60,20 @@ export default function UploadPage() {
     setFiles(updatedFiles);
     localStorage.setItem('my_stored_files', JSON.stringify(updatedFiles));
   };
-
+const handleDownload = (id: number) => {
+    
+    const updatedFiles = files.map(file => {
+      if (file.id === id) {
+        return {
+          ...file,
+          counter: (file.counter || 0) + 1  
+        };
+      }
+      return file;
+    });
+  setFiles(updatedFiles);
+    localStorage.setItem('my_stored_files', JSON.stringify(updatedFiles));}
+    
 
   return (
     <Container className="d-flex justify-content-center py-5">
@@ -100,9 +112,14 @@ export default function UploadPage() {
                   className="d-flex justify-content-between align-items-center"
                 >
                   <span className="fw-bold text-truncate me-2" style={{ maxWidth: '100%' }}>
-                    {file.name}{  file.date ? ` (Uploaded on: ${new Date(file.date).toLocaleDateString()})` : ''} -Download Times:{file.counter}
+                    {file.name}{  file.date ? ` (Uploaded on: ${new Date(file.date).toLocaleDateString()})` : ''}
                   </span>
-                  
+                    <div className="d-flex align-items-center">
+                    <span className="me-3 text-nowrap">
+                      Downloads: {file.counter || 0}
+                    </span>
+                    
+                    </div>
                   <div>
                     <Button 
                       as="a"
@@ -111,7 +128,7 @@ export default function UploadPage() {
                       variant="outline-success" 
                       size="sm" 
                       className="me-2"
-                      onClick={()=>{setDownloadCount(file.counter ++)}}
+                      onClick={()=>handleDownload(file.id)}
                     >
                       Download
                     </Button>

@@ -1,7 +1,5 @@
-// src/components/registerPage/registerPage.tsx
 import React,{useState} from 'react'
 import { Container, Row, Form, Col, Button } from 'react-bootstrap';
-// REMOVE: import {hashPasswords} from '../../services/hashPassword';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -33,21 +31,19 @@ export default function RegisterPage() {
           return;
         }
 
-        // 1. Send PLAINTEXT password to the server
         const newUser = {
             name: name,
             email: email,
             password: password, 
         };
         
-        // 2. Call the new server API endpoint
+
         axios.post('/api/register', newUser) 
             .then(() => {
               alert("Registration successful! You can now log in.");
-              navigate('/'); // Redirect to login page
+              navigate('/'); 
             })
             .catch((error) => {
-              // The server returns the error message
               const errorMessage = error.response?.data?.error || "Registration failed. Please try again.";
               console.error("There was an error registering the user!", error);
               alert(errorMessage);
@@ -110,6 +106,9 @@ export default function RegisterPage() {
 
                 <Button variant="primary" type="submit" className="w-100">
                   Register
+                </Button>
+                <Button variant="secondary" type="button" className="w-100" onClick={()=>navigate('/login')}>
+                  Log in
                 </Button>
               </Form>
             </Col>

@@ -1,5 +1,3 @@
-// src/components/dashboardPage/DashboardPage.tsx
-
 import React from 'react';
 import { Container, Row, Col, Card, Alert, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';

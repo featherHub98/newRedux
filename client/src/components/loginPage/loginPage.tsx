@@ -1,4 +1,3 @@
-// src/components/loginPage/loginPage.tsx
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -8,7 +7,6 @@ import { login } from '../../redux/reducers/loginSlice.tsx';
 import { useDispatch } from 'react-redux';
 import Container from 'react-bootstrap/esm/Container';
 import axios from 'axios';
-// REMOVE: import { authService } from '../../services/authService.ts'; // Auth logic is now on server
 
 function LoginPage() {
   const dispatch = useDispatch();
@@ -24,13 +22,12 @@ function LoginPage() {
     setLoading(true);
 
     try {
-      // The client calls the new server login API endpoint
       const response = await axios.post('/api/login', { 
         email: email,
-        password: pwd, // Send plaintext password to the server
+        password: pwd,
       });
 
-      // The server returns the token on success
+    
       const { token } = response.data; 
 
       if (token) {
@@ -43,7 +40,6 @@ function LoginPage() {
         setError('Login successful, but no token received.');
       }
     } catch (error: any) {
-      // Get error from server response
       const errorMessage = error.response?.data?.error || 'Login failed. Please check your credentials.';
       setError(errorMessage);
     } finally {
@@ -96,6 +92,17 @@ function LoginPage() {
                 disabled={loading}
               >
                 {loading ? 'Logging in...' : 'Log In'}
+              </Button>
+            </div>
+            <div className="d-grid gap-2">
+              <Button 
+                variant="secondary" 
+                type="button" 
+                onClick={() => navigate('/register')} 
+                size="lg"
+                
+              >
+                Create New Account
               </Button>
             </div>
           </Form>

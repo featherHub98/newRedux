@@ -1,9 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jose = require('jose');
 
-
-
-const JWT_SECRET = 'your-secret-key-must-be-at-least-32-characters-long'; 
+const JWT_SECRET = 'this-is-a-very-secret-key-change-me'; 
 const secret = new TextEncoder().encode(JWT_SECRET);
 
 async function comparePassword(password, hashedPassword) {

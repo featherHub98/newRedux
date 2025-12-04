@@ -1,5 +1,3 @@
-// src/components/homePage/HomePage.tsx
-
 import React from 'react';
 import { Container, Card, Button, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
