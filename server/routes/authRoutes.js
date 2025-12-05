@@ -64,5 +64,20 @@ app.post('/login', async (req, res) => {
         res.status(500).json({ error: 'Server error during login.' });
     }
 });
-
+app.get('/protected', async (req, res) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (!token) {
+        return res.status(401).json({ error: 'No token provided' });
+    }
+    const users = await getUsers();
+    try {
+        const { verifyToken } = require('../services/authService');
+        const decoded = await verifyToken(token);
+        res.json({ message: 'Protected data accessed', users: users });
+    } catch (error) {
+        console.error('Token verification failed:', error);
+        res.status(403).json({ error: 'Invalid or expired token' });
+    }
+});
 module.exports = app;

@@ -10,6 +10,7 @@ import DashboardPage from './components/dashboardPage/DashboardPage.tsx';
 import { useEffect } from 'react';
 import { initializeAuth } from './redux/reducers/loginSlice.tsx';
 import RegisterPage from './components/registerPage/registerPage.tsx';
+import DummyPage from './components/dummyPage/DummyPage.tsx';
 
 
 const ProtectedRoute = ({ isLoggedIn, element: Element }) => {
@@ -48,6 +49,10 @@ function App() {
           <Route 
             path='/upload' 
             element={<ProtectedRoute isLoggedIn={isLoggedIn} element={<UploadPage />} />} 
+          />
+          <Route 
+            path='/dummy' 
+            element={<ProtectedRoute isLoggedIn={isLoggedIn} element={<DummyPage />} />} 
           />
           <Route path='*' element={<h1>404 Not Found</h1>} />
         </Routes>

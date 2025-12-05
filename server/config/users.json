@@ -10,5 +10,11 @@
     "name": "saif",
     "email": "tst@tst.com",
     "pwd": "$2a$10$N6XQhX4kVZ3QoPYvTSZ1FeMO5qKszMHRRgsvuQTYqNCnTOjRJctzO"
+  },
+  {
+    "id": 3,
+    "name": "Mouhammad Graba",
+    "email": "gomyexample@gmail.com",
+    "pwd": "$2a$10$hJ9MDQ41nRCngimbwJBcne0Dd24gujvTAyFmMcKFWIxo6/cDJgZXS"
   }
 ]
