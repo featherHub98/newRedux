@@ -16,5 +16,11 @@
     "name": "Mouhammad Graba",
     "email": "gomyexample@gmail.com",
     "pwd": "$2a$10$hJ9MDQ41nRCngimbwJBcne0Dd24gujvTAyFmMcKFWIxo6/cDJgZXS"
+  },
+  {
+    "id": 4,
+    "name": "Salim",
+    "email": "Salim@gmail.com",
+    "pwd": "$2a$10$jjgsJXoJv7L9976MF8v4bubKDFNWdep/cTIxpfNYu4iZDtMUEjavu"
   }
 ]

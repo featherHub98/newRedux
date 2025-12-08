@@ -56,6 +56,7 @@ function NavBar() {
             
             <Nav.Link as={NavLink} to="/upload">Upload</Nav.Link>
             <Nav.Link as={NavLink} to="/dummy">Dummy Page</Nav.Link>
+            <Nav.Link as={NavLink} to="/blog">Blog Page</Nav.Link>
           </Nav>
 
           <Nav>

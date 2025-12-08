@@ -4,7 +4,7 @@ const app = express();
 const { hashPasswords } = require('../services/hashPassword');
 const { comparePassword, generateToken } = require('../services/authService');
 const { getUsers, saveUsers } = require('../controller/dataHandler');
-
+const { updateFiles } = require('../controller/dataHandler');
 
 app.post('/register', async (req, res) => {
     try {
@@ -78,6 +78,25 @@ app.get('/protected', async (req, res) => {
     } catch (error) {
         console.error('Token verification failed:', error);
         res.status(403).json({ error: 'Invalid or expired token' });
+    }
+});
+app.post('/updateFiles', async (req, res) => {
+    try {
+        const { files } = req.body;
+        updateFiles(files);
+        res.status(200).json({ message: 'Files updated successfully' });
+    } catch (error) {
+        console.error('Error updating files:', error);
+        res.status(500).json({ error: 'Server error during file update.' });
+    }
+});
+app.get('/readFiles', async (req, res) => {
+    try {
+        const files = await readFiles();
+        res.status(200).json({ files: files });
+    } catch (error) {
+        console.error('Error reading files:', error);
+        res.status(500).json({ error: 'Server error during file read.' });
     }
 });
 module.exports = app;
