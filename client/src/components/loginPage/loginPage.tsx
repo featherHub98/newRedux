@@ -22,14 +22,14 @@ function LoginPage() {
     setLoading(true);
 
     try {
-      const response = await axios.post('/api/login', { 
+      const response = await axios.post('http://localhost:3500/login', { 
         email: email,
         password: pwd,
       });
 
-    
-      const { token } = response.data; 
-
+      
+      const  token  = response.data.auth.accessToken; 
+      //console.log(response.data.auth.accessToken);
       if (token) {
         dispatch(login({ 
           email: email, 

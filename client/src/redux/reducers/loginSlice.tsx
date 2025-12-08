@@ -17,6 +17,7 @@ const loginSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action: PayloadAction<{ email: string; token: string }>) => {
+      console.log(action.payload.token);
       state.isLoggedIn = true;
       state.email = action.payload.email;
       state.token = action.payload.token; 
