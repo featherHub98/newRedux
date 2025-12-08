@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { Container, Card, Form, ListGroup, Button, Alert } from 'react-bootstrap';
-import axios from "axios";
+import axiosInstance from "../../axiosInstance.ts";
 import { upload, download, deleteFile } from "../../redux/reducers/uploadSlice.tsx";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -44,7 +44,7 @@ export default function UploadPage() {
     }, [filesToDisplay]); 
 
     const updateDB = async (newFiles: StoredFile[]) => {
-        await axios.post('/api/updateFiles', { files: newFiles })
+        await axiosInstance.post('/updateFiles', { files: newFiles })
             .then(response => {
                 console.log('Files updated successfully');
             })

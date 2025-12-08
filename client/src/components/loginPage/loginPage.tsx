@@ -7,7 +7,7 @@ import { login } from '../../redux/reducers/loginSlice.tsx';
 import { useDispatch } from 'react-redux';
 import Container from 'react-bootstrap/esm/Container';
 import axios from 'axios';
-
+import axiosInstance from '../../axiosInstance.ts';
 function LoginPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();

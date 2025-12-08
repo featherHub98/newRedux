@@ -54,7 +54,6 @@ export default function BlogPage() {
 
         try {
             dispatch(upload(newBlogEntry));
-            
             setSuccess(`Successfully created blog post: "${title}". It is now stored in your files.`);
             setTitle('');
             setContent('');

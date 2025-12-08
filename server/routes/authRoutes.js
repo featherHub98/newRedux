@@ -5,7 +5,7 @@ const { hashPasswords } = require('../services/hashPassword');
 const { comparePassword, generateToken } = require('../services/authService');
 const { getUsers, saveUsers } = require('../controller/dataHandler');
 const { updateFiles } = require('../controller/dataHandler');
-
+const {verifyToken} = require('../services/authService');
 app.post('/register', async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -81,13 +81,30 @@ app.get('/protected', async (req, res) => {
     }
 });
 app.post('/updateFiles', async (req, res) => {
+    const authHeader = req.headers['authorization'];
+   
+     let token = ""
+   if (authHeader && authHeader.startsWith('Bearer ')) {
+     token = authHeader.substring(7); // Remove 'Bearer ' prefix
+  }
+  console.log(!token);
+  
+
+    if (!token) {
+    
+        return res.status(401).json({ error: 'Authentication required: No token provided' });
+    }
+
     try {
+        const decoded = await verifyToken(token);
         const { files } = req.body;
-        updateFiles(files);
+        updateFiles(files); 
+
         res.status(200).json({ message: 'Files updated successfully' });
+
     } catch (error) {
-        console.error('Error updating files:', error);
-        res.status(500).json({ error: 'Server error during file update.' });
+        console.error('Token verification failed:', error);
+        res.status(403).json({ error: 'Invalid or expired token' });
     }
 });
 app.get('/readFiles', async (req, res) => {

@@ -23,10 +23,9 @@ const UploadSlice = createSlice({
     initialState,
     reducers: {
         upload: (state, action: PayloadAction<FileItem>) => {
-            if (state.length === 1 && state[0].id === 0) {
-                state.splice(0, 1);
-            }
+           
             state.push(action.payload);
+            localStorage.setItem("my_stored_files", JSON.stringify(state.filter(file => file.id !== 0)));
         },
         
         download: (state, action: PayloadAction<{ id: number }>) => {
